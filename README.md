@@ -56,3 +56,11 @@ npm start
 `play.html` 和 `dist/cloudhop.html` 刻意不加入忽略列表。源码、测试、构建脚本和离线包均应提交并推送到 GitHub，避免只存在临时云目录。
 
 新云环境使用现有检出，不另建 worktree。进程不会随快照保留，先执行检查与测试，再运行 `npm start`。环境设置中的启动说明只保存流程，不等于代码已推送或网站已发布。
+
+## 本次验证（2.0）
+
+- `npm test`：41 项引擎与玩法测试，包括三关完整主线通关、最终守卫、三条蓝湾路线、物理手感、奖励持久性和上下骑。
+- `npm run check`：所有 JavaScript / 构建 / 服务脚本语法检查。
+- 可选浏览器集成：开发环境已提供 Python Playwright 与 `/usr/bin/chromium` 时，先运行 `npm start`，再运行 `python tests/browser-smoke.py` 与 `python tests/gamepad-smoke.py`。普通游玩和构建不需要 Playwright。
+- 浏览器检查通过真实键盘完成三关与三条水下支线，验证过关继承、成绩保存、水下音乐、音效输出和静音；用未修改的单文件在断网的手机环境中验证多指骑乘跑跳、游泳下潜、暂停、全屏退出、320 / 390 像素按键不重叠。标准手柄使用输入模拟器验证，未宣称实体手柄实机测试。
+- `npm run build` 可重复生成相同内容；`play.html`、`dist/cloudhop.html` 与服务返回的文件校验值一致，成品中不包含测试控制器或观察代码。

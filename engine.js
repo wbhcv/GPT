@@ -44,7 +44,7 @@ export function makeLevel(index=0){
  const stairs=[0,1,2,3].map(i=>rect(s.width-445+i*42,GROUND-(i+1)*28,42,(i+1)*28,'stone'));
  const pipes=s.pipes.map(([x,y,bonus])=>rect(x,y,64,groundAt({floors},x)-y,'pipe',{bonus:Boolean(bonus)}));
  const springs=s.springs.map(([x,y])=>rect(x,y-15,36,15,'spring',{compression:0}));
- const moving=s.moving.map(([x,y,w,rx,ry],i)=>rect(x,y,w,18,'moving',{originX:x,originY:y,rx,ry,phase:i*.8,speed:1.3+index*.325,dx:0,dy:0}));
+ const moving=s.moving.map(([x,y,w,rx,ry],i)=>rect(x,y,w,18,'moving',{originX:x,originY:y,rx,ry,phase:i*.8,speed:[1.3,1.65,1.95][index],dx:0,dy:0}));
  const spikes=s.spikes.map(([x,y,w])=>rect(x,y-22,w,22,'spike'));
  const flames=s.flames.map(([x,y,h,period,duration,offset])=>rect(x,y-h,28,h,'flame',{period,duration,offset,warmup:.65,state:'idle',phase:0}));
  const coins=[];
