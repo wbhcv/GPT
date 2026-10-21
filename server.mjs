@@ -1,0 +1,6 @@
+import http from 'node:http';
+import {readFile} from 'node:fs/promises';
+const root=new URL('./',import.meta.url),publicFiles=new Set(['index.html','engine.js','audio.js','game.js','style.css','icon.svg','play.html']);
+const types={html:'text/html; charset=utf-8',js:'text/javascript; charset=utf-8',css:'text/css; charset=utf-8',svg:'image/svg+xml'};
+const server=http.createServer(async(req,res)=>{if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD'});res.end();return;}try{const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\//,'')||'index.html';if(!publicFiles.has(path)){res.writeHead(404);res.end('Not found');return;}const data=await readFile(new URL(path,root));res.writeHead(200,{'Content-Type':types[path.split('.').pop()]||'application/octet-stream','Content-Length':data.length,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff'});res.end(req.method==='HEAD'?undefined:data);}catch{res.writeHead(404);res.end('Not found');}});
+server.listen(Number(process.env.PORT||3000),'0.0.0.0',()=>console.log(`Cloudhop listening on port ${process.env.PORT||3000}`));server.on('error',e=>{console.error(e.message);process.exitCode=1;});
